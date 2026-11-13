@@ -9,7 +9,12 @@ source "$SELF_DIR/lib/common.sh"
 source "$SELF_DIR/modules/coming_soon.sh"
 source "$SELF_DIR/modules/pterodactyl_panel.sh"
 source "$SELF_DIR/modules/pterodactyl_wings.sh"
+source "$SELF_DIR/modules/pufferpanel.sh"
+source "$SELF_DIR/modules/cloudpanel.sh"
 source "$SELF_DIR/modules/avm_bot.sh"
+source "$SELF_DIR/modules/axionhost_tickets.sh"
+source "$SELF_DIR/modules/tools.sh"
+source "$SELF_DIR/modules/theme_generic.sh"
 
 panels_menu() {
   while true; do
@@ -18,16 +23,16 @@ panels_menu() {
     hr
     echo -e "   ${C_CYAN}1)${C_RESET} Pterodactyl Panel          ${C_GREEN}ready${C_RESET}"
     echo -e "   ${C_CYAN}2)${C_RESET} Pterodactyl Wings (node)   ${C_GREEN}ready${C_RESET}"
-    echo -e "   ${C_CYAN}3)${C_RESET} PufferPanel                ${C_YELLOW}coming soon${C_RESET}"
-    echo -e "   ${C_CYAN}4)${C_RESET} CloudPanel                 ${C_YELLOW}coming soon${C_RESET}"
+    echo -e "   ${C_CYAN}3)${C_RESET} PufferPanel                ${C_GREEN}ready${C_RESET}"
+    echo -e "   ${C_CYAN}4)${C_RESET} CloudPanel                 ${C_GREEN}ready${C_RESET}"
     echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
     hr
     read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
     case "$c" in
       1) install_pterodactyl_panel ;;
       2) install_pterodactyl_wings ;;
-      3) coming_soon "PufferPanel" ;;
-      4) coming_soon "CloudPanel" ;;
+      3) install_pufferpanel ;;
+      4) install_cloudpanel ;;
       0) return ;;
       *) warn "Invalid choice"; sleep 1 ;;
     esac
@@ -40,13 +45,13 @@ bots_menu() {
     echo -e "  ${C_BOLD}Bots${C_RESET}"
     hr
     echo -e "   ${C_CYAN}1)${C_RESET} AVM-Pro (AxionHost Discord VPS bot)   ${C_GREEN}ready${C_RESET}"
-    echo -e "   ${C_CYAN}2)${C_RESET} AxionHost Tickets (AI support bot)    ${C_YELLOW}coming soon${C_RESET}"
+    echo -e "   ${C_CYAN}2)${C_RESET} AxionHost Tickets (AI support bot)    ${C_GREEN}ready${C_RESET}"
     echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
     hr
     read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
     case "$c" in
       1) install_avm_bot ;;
-      2) coming_soon "AxionHost Tickets (via this menu)" ;;
+      2) install_axionhost_tickets ;;
       0) return ;;
       *) warn "Invalid choice"; sleep 1 ;;
     esac
@@ -54,17 +59,45 @@ bots_menu() {
 }
 
 tools_menu() {
-  banner
-  echo -e "  ${C_BOLD}Tools${C_RESET}"
-  hr
-  coming_soon "Tools"
+  while true; do
+    banner
+    echo -e "  ${C_BOLD}Tools${C_RESET}"
+    hr
+    echo -e "   ${C_CYAN}1)${C_RESET} Add swap"
+    echo -e "   ${C_CYAN}2)${C_RESET} Basic firewall (ufw)"
+    echo -e "   ${C_CYAN}3)${C_RESET} Fail2ban (SSH brute-force protection)"
+    echo -e "   ${C_CYAN}4)${C_RESET} Install Docker (standalone)"
+    echo -e "   ${C_CYAN}5)${C_RESET} Quick server benchmark"
+    echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
+    hr
+    read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
+    case "$c" in
+      1) tool_add_swap ;;
+      2) tool_firewall ;;
+      3) tool_fail2ban ;;
+      4) tool_docker ;;
+      5) tool_benchmark ;;
+      0) return ;;
+      *) warn "Invalid choice"; sleep 1 ;;
+    esac
+  done
 }
 
 themes_menu() {
-  banner
-  echo -e "  ${C_BOLD}Themes${C_RESET}"
-  hr
-  coming_soon "Themes"
+  while true; do
+    banner
+    echo -e "  ${C_BOLD}Themes${C_RESET}"
+    hr
+    echo -e "   ${C_CYAN}1)${C_RESET} Apply a Pterodactyl theme (from git URL)   ${C_GREEN}ready${C_RESET}"
+    echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
+    hr
+    read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
+    case "$c" in
+      1) apply_pterodactyl_theme ;;
+      0) return ;;
+      *) warn "Invalid choice"; sleep 1 ;;
+    esac
+  done
 }
 
 main_menu() {

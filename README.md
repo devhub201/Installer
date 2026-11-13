@@ -23,14 +23,27 @@ sudo bash installer.sh
 - ✅ **Pterodactyl Wings** — Docker + the Wings daemon as a systemd service; paste the
   panel's own "auto-deploy" command (from Admin → Nodes → your node) and it configures
   and starts itself.
-- ⏳ PufferPanel, CloudPanel — menu entries exist, not built yet.
+- ✅ **PufferPanel** — installed via its official apt repo.
+- ✅ **CloudPanel** — installed via its official installer script (pick your DB engine).
 
 **Bots**
 - ✅ **AVM-Pro** — clones/updates `devhub201/AVM-Pro` and hands off to its own installer
   (so there's one source of truth for that bot's install logic, not two).
-- ⏳ AxionHost Tickets — menu entry exists, not wired up yet.
+- ✅ **AxionHost Tickets** — same pattern, clones `devhub201/axionhost-tickets` and runs
+  its own `install.sh`.
 
-**Tools / Themes** — placeholder sections for now, ready to fill in.
+**Tools**
+- ✅ Add swap (size + swappiness, persists via fstab)
+- ✅ Basic firewall (ufw — SSH/HTTP/HTTPS + any extra ports you name)
+- ✅ Fail2ban (SSH brute-force protection, configurable ban time/attempts)
+- ✅ Docker standalone install (+ optional compose plugin)
+- ✅ Quick server benchmark (CPU/RAM/disk, optional network speedtest)
+
+**Themes**
+- ✅ Apply a Pterodactyl theme from any git repo — runs the theme's own `install.sh` if
+  it ships one, otherwise does a generic resources/public copy + asset rebuild. (No
+  specific theme is bundled — theme repos come and go, so point it at whichever one
+  you trust.)
 
 ## Adding a new module
 
