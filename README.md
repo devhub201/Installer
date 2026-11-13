@@ -1,7 +1,8 @@
 # The Axion Installer
 
 One menu-driven installer for everything you host: game panels, Discord bots, tools,
-and themes — animated terminal UI, built to grow as more modules get added.
+and themes — 50+ real installable items behind an animated terminal UI, built to grow
+as more modules get added.
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/devhub201/installer/main/bootstrap.sh)
@@ -31,13 +32,22 @@ sudo bash installer.sh
   (so there's one source of truth for that bot's install logic, not two).
 - ✅ **AxionHost Tickets** — same pattern, clones `devhub201/axionhost-tickets` and runs
   its own `install.sh`.
+- ✅ **Deploy any bot from git** — generic: clone, venv, requirements.txt, systemd
+  service, for any bot that doesn't ship its own installer.
 
-**Tools**
-- ✅ Add swap (size + swappiness, persists via fstab)
-- ✅ Basic firewall (ufw — SSH/HTTP/HTTPS + any extra ports you name)
-- ✅ Fail2ban (SSH brute-force protection, configurable ban time/attempts)
-- ✅ Docker standalone install (+ optional compose plugin)
-- ✅ Quick server benchmark (CPU/RAM/disk, optional network speedtest)
+**Tools** — grouped into 6 sub-menus, 35+ items total:
+- **System**: update & upgrade, add swap, create sudo user, set hostname/timezone, dev
+  basics (build-essential/git/curl/wget/unzip), CLI tools (htop/btop/tmux/screen/neofetch),
+  disk cleanup, custom login banner (MOTD).
+- **Security**: ufw firewall, fail2ban, SSH hardening (disable root/password login, change
+  port), automatic security updates, ClamAV scan, rkhunter.
+- **Web & Database**: nginx, Apache, MariaDB, PostgreSQL, Redis, phpMyAdmin, standalone
+  Certbot SSL, Node.js, Python3, Composer, quick static-site deploy.
+- **Docker & Apps**: Docker Engine, Portainer, Nginx Proxy Manager, Uptime Kuma, n8n,
+  MinIO, Watchtower, WireGuard VPN (wg-easy with a web UI).
+- **Monitoring**: Netdata, vnstat, Grafana, Prometheus, quick server benchmark.
+- **Network & Backup**: Tailscale, vsftpd FTP, rclone, scheduled tar+cron backups with
+  auto-rotation.
 
 **Themes**
 - ✅ Apply a Pterodactyl theme from any git repo — runs the theme's own `install.sh` if

@@ -41,19 +41,21 @@ banner() {
   echo -e "  ${C_GREY}The Axion Installer — panels, bots, tools & themes, one menu.${C_RESET}\n"
 }
 
-# Animated spinner wrapped around a command. Usage: spin "Doing thing..." some_command arg1 arg2
+# Animated spinner wrapped around a command — braille frames cycling cyan→blue→purple.
+# Usage: spin "Doing thing..." some_command arg1 arg2
 spin() {
   local msg="$1"; shift
   local logf; logf="$(mktemp)"
   "$@" >"$logf" 2>&1 &
   local pid=$!
   local frames='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+  local cols=("$C_CYAN" "$C_CYAN" "$C_CYAN" "$C_BLUE" "$C_BLUE" "$C_BLUE" "$C_PURPLE" "$C_PURPLE" "$C_PURPLE" "$C_BLUE")
   local i=0
   tput civis 2>/dev/null
   while kill -0 "$pid" 2>/dev/null; do
     i=$(((i + 1) % ${#frames}))
-    printf "\r  ${C_CYAN}%s${C_RESET} %s" "${frames:$i:1}" "$msg"
-    sleep 0.08
+    printf "\r  ${cols[$i]}%s${C_RESET} %s" "${frames:$i:1}" "$msg"
+    sleep 0.07
   done
   tput cnorm 2>/dev/null
   wait "$pid"; local rc=$?
@@ -67,6 +69,34 @@ spin() {
     die "'$msg' failed. Last lines:\n$(tail -n 15 "$logf")"
   fi
   rm -f "$logf"
+}
+
+# Step progress bar for multi-step flows. Usage: step 3 8 "Installing nginx"
+step() {
+  local cur="$1" total="$2" label="$3"
+  local width=24
+  local filled=$((cur * width / total))
+  local bar=""
+  for ((k = 0; k < width; k++)); do
+    if [ $k -lt $filled ]; then bar+="█"; else bar+="░"; fi
+  done
+  local pct=$((cur * 100 / total))
+  echo -e "  ${C_GREY}[${C_PURPLE}${bar}${C_GREY}] ${pct}%${C_RESET}  ${C_BOLD}${label}${C_RESET}  ${C_GREY}(${cur}/${total})${C_RESET}"
+}
+
+# One-time animated boot sequence, shown before the first menu of a session.
+boot_sequence() {
+  local frames='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+  local msgs=("Waking up the engines" "Loading modules" "Warming up the gradients" "Ready")
+  tput civis 2>/dev/null
+  for m in "${msgs[@]}"; do
+    for i in $(seq 0 9); do
+      printf "\r  ${C_PURPLE}%s${C_RESET} %s..." "${frames:$((i % ${#frames})):1}" "$m"
+      sleep 0.025
+    done
+  done
+  printf "\r%-50s\r" " "
+  tput cnorm 2>/dev/null
 }
 
 confirm() {
