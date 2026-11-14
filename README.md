@@ -35,7 +35,7 @@ sudo bash installer.sh
 - ✅ **Deploy any bot from git** — generic: clone, venv, requirements.txt, systemd
   service, for any bot that doesn't ship its own installer.
 
-**Tools** — grouped into 6 sub-menus, 35+ items total:
+**Tools** — grouped into 7 sub-menus, 40+ items total:
 - **System**: update & upgrade, add swap, create sudo user, set hostname/timezone, dev
   basics (build-essential/git/curl/wget/unzip), CLI tools (htop/btop/tmux/screen/neofetch),
   disk cleanup, custom login banner (MOTD).
@@ -48,12 +48,24 @@ sudo bash installer.sh
 - **Monitoring**: Netdata, vnstat, Grafana, Prometheus, quick server benchmark.
 - **Network & Backup**: Tailscale, vsftpd FTP, rclone, scheduled tar+cron backups with
   auto-rotation.
+- **Hosting Extras** — things a hosting business specifically needs: Minecraft
+  start-script generator (Aikar flags, sized to your RAM), a *separate* Pterodactyl
+  panel-database backup (mysqldump + rotation, distinct from the generic folder backup
+  above), wildcard SSL via Cloudflare DNS (one cert for every node subdomain), Discord
+  webhook status pings (boot notification + daily health check-in), basic DDoS/abuse
+  rate-limiting (iptables SYN-flood + per-IP connection limits), and LibreSpeed (your
+  own branded speedtest for customers).
 
 **Themes**
-- ✅ Apply a Pterodactyl theme from any git repo — runs the theme's own `install.sh` if
-  it ships one, otherwise does a generic resources/public copy + asset rebuild. (No
-  specific theme is bundled — theme repos come and go, so point it at whichever one
-  you trust.)
+- ✅ **Blueprint Framework** — the extension framework most modern free Pterodactyl
+  themes are built on; install this first.
+- ✅ 5 popular, genuinely free/open-source picks (verified against `github.com/topics/
+  pterodactyl-theme` — no paid/marketplace-only resources): **NookTheme** (full
+  standalone theme), **Darkenate**, **Recolor**, and **Abyss Purple** (Blueprint
+  extensions), and **Espresso Theme** (standalone dark minimal).
+- ✅ Apply any other Pterodactyl theme from a git repo — runs the theme's own
+  `install.sh` if it ships one, otherwise does a generic resources/public copy + asset
+  rebuild.
 
 ## Adding a new module
 

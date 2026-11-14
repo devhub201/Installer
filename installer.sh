@@ -21,7 +21,9 @@ source "$SELF_DIR/modules/tools_webdb.sh"
 source "$SELF_DIR/modules/tools_docker.sh"
 source "$SELF_DIR/modules/tools_monitoring.sh"
 source "$SELF_DIR/modules/tools_network.sh"
+source "$SELF_DIR/modules/hosting_extras.sh"
 source "$SELF_DIR/modules/theme_generic.sh"
+source "$SELF_DIR/modules/pterodactyl_themes.sh"
 
 panels_menu() {
   while true; do
@@ -188,10 +190,29 @@ tools_network_menu() {
   done
 }
 
+tools_hosting_menu() {
+  while true; do
+    banner; echo -e "  ${C_BOLD}Tools › Hosting Extras${C_RESET}"; hr
+    echo -e "   ${C_CYAN}1)${C_RESET} Minecraft start-script generator (Aikar flags)"
+    echo -e "   ${C_CYAN}2)${C_RESET} Pterodactyl panel DB backup (scheduled)"
+    echo -e "   ${C_CYAN}3)${C_RESET} Wildcard SSL via Cloudflare DNS"
+    echo -e "   ${C_CYAN}4)${C_RESET} Discord status pings (boot + daily health check)"
+    echo -e "   ${C_CYAN}5)${C_RESET} Basic DDoS / abuse rate-limiting"
+    echo -e "   ${C_CYAN}6)${C_RESET} LibreSpeed — your own branded speedtest"
+    echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
+    hr; read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
+    case "$c" in
+      1) hx_mc_startscript ;; 2) hx_panel_db_backup ;; 3) hx_wildcard_ssl ;;
+      4) hx_discord_status ;; 5) hx_ddos_basic ;; 6) hx_librespeed ;;
+      0) return ;; *) warn "Invalid choice"; sleep 1 ;;
+    esac
+  done
+}
+
 tools_menu() {
   while true; do
     banner
-    echo -e "  ${C_BOLD}Tools${C_RESET}  ${C_GREY}— 35+ one-shot admin tools, grouped${C_RESET}"
+    echo -e "  ${C_BOLD}Tools${C_RESET}  ${C_GREY}— 40+ one-shot admin tools, grouped${C_RESET}"
     hr
     echo -e "   ${C_CYAN}1)${C_RESET} System"
     echo -e "   ${C_CYAN}2)${C_RESET} Security"
@@ -199,6 +220,7 @@ tools_menu() {
     echo -e "   ${C_CYAN}4)${C_RESET} Docker & Apps"
     echo -e "   ${C_CYAN}5)${C_RESET} Monitoring"
     echo -e "   ${C_CYAN}6)${C_RESET} Network & Backup"
+    echo -e "   ${C_CYAN}7)${C_RESET} Hosting Extras"
     echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
     hr
     read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
@@ -209,6 +231,7 @@ tools_menu() {
       4) tools_docker_menu ;;
       5) tools_monitoring_menu ;;
       6) tools_network_menu ;;
+      7) tools_hosting_menu ;;
       0) return ;;
       *) warn "Invalid choice"; sleep 1 ;;
     esac
@@ -220,12 +243,24 @@ themes_menu() {
     banner
     echo -e "  ${C_BOLD}Themes${C_RESET}"
     hr
-    echo -e "   ${C_CYAN}1)${C_RESET} Apply a Pterodactyl theme (from git URL)   ${C_GREEN}ready${C_RESET}"
+    echo -e "   ${C_CYAN}1)${C_RESET} Blueprint Framework (install this first)"
+    echo -e "   ${C_CYAN}2)${C_RESET} NookTheme (full free theme)"
+    echo -e "   ${C_CYAN}3)${C_RESET} Darkenate (Blueprint dark theme)"
+    echo -e "   ${C_CYAN}4)${C_RESET} Recolor (Blueprint accent-color extension)"
+    echo -e "   ${C_CYAN}5)${C_RESET} Abyss Purple (Blueprint dark purple theme)"
+    echo -e "   ${C_CYAN}6)${C_RESET} Espresso Theme (standalone dark minimal)"
+    echo -e "   ${C_CYAN}7)${C_RESET} Apply any other Pterodactyl theme (from git URL)"
     echo -e "   ${C_CYAN}0)${C_RESET} ← Back"
     hr
     read -rp "$(echo -e "  ${C_BLUE}›${C_RESET} Choose: ")" c
     case "$c" in
-      1) apply_pterodactyl_theme ;;
+      1) install_blueprint ;;
+      2) theme_nooktheme ;;
+      3) theme_darkenate ;;
+      4) theme_recolor ;;
+      5) theme_abyss_purple ;;
+      6) theme_espresso ;;
+      7) apply_pterodactyl_theme ;;
       0) return ;;
       *) warn "Invalid choice"; sleep 1 ;;
     esac
